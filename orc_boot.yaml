@@ -1,0 +1,40 @@
+orc:
+  name: "Orc님"
+  timezone: "Asia/Seoul"
+  language: "ko"
+  fortune_birth_years: [1964, 1966, 1967, 1974]
+
+report:
+  default_template: "양식1"
+  templates:
+    양식1: {lines: 10, sections: [signals, top_news, actions]}
+    양식2: {lines: 12, sections: [lights, breaches, actions_now]}
+    양식3: {pages: 3,  sections: [context, data, analysis, risk, response]}
+    양식4: {pages: 6,  sections: [market, tech, finance, risk, roadmap, kpis]}
+
+modules:
+  fortune: {goal: "매일 06:00 7/3 포맷", enabled: true}
+  finance: {goal: "일별 변화 감지", enabled: true}
+  tech:    {goal: "디스플레이·반도체·전지 3~6건/일", enabled: true}
+  nbfi:    {goal: "유동성·레버리지 경보", enabled: true}
+
+targets_metrics_methods:
+  tech:
+    targets:
+      rss: ["https://www.ledinside.com/rss", "https://news.mynavi.jp/techplus/index.rss", "https://www.yolegroup.com/feed/"]
+    metrics: ["신규소재","공정","장비","정책"]
+    method: "rss-rank"
+  nbfi:
+    targets:
+      fx: ["USD/KRW(요약)","3M KRW-USD basis(요약)"]
+      credit: ["미 HY OAS(요약)"]
+    metrics: {usdkrw_jump_won: 15, basis_drop_bp: 20, hy_oas_jump_bp: 80}
+    method: "threshold-and-streak"
+
+runtime:
+  staging_time: "06:00"
+  commands: {boot: "부팅", morning_pack: "아침팩", emergency: "긴급", deep: "심층", plan: "사업계획"}
+
+persistence:
+  state_file: "./out/save_state.json"
+  daily_report_dir: "./out/"
